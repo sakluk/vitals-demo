@@ -51,10 +51,28 @@ Tulokset (`log.html`, `report.html`) syntyvät ajokansioon.
 | `01_login_tests.robot` | Valmis | Esimerkkitestit kirjautumisesta — tutustu tähän ensin |
 | `02_patient_tests.robot` | Osittain täytetty | Täydennä `# TODO`-kohdat |
 
-## 5. Vinkkejä
+## 5. Elementtien id-tunnisteiden löytäminen
 
-- Käytä `id=`-lokaattoreita — kaikki interaktiiviset elementit on merkitty
-  yksilöllisillä `id`-attribuuteilla (ks. vaatimusmäärittely, kohta 5).
+Kaikki VitalsDemo-sovelluksen interaktiiviset elementit (napit, lomakekentät,
+taulukot) on merkitty yksilöllisillä `id`-attribuuteilla, joita RF-testeissä
+käytetään `id=`-lokaattoreina (esim. `id=login-btn`). Sovelluksessa ei ole
+erillistä listaa tunnisteista — etsi ne itse selaimen kehittäjätyökaluilla,
+samalla tavalla kuin tekisit oikeassa testausprojektissa:
+
+1. Avaa sivu selaimessa (`http://localhost:5000`) ja paina **F12** (tai
+   hiiren oikea painike → **Tutki/Inspect**) avataksesi kehittäjätyökalut.
+2. Käytä työkalurivin **elementin valinta** -kuvaketta (nuoli-kursori-ikoni,
+   Chromessa/Edgessä vasemmassa yläkulmassa) ja klikkaa haluamaasi elementtiä
+   sivulla — esim. kirjautumisnappia tai potilastaulukon riviä.
+3. Elementin HTML korostuu **Elements/Elementit**-välilehdellä; etsi
+   `id="..."`-attribuutti auenneesta koodista.
+4. Käytä löytynyttä arvoa RF-testissä muodossa `id=<arvo>`.
+
+Vinkki: `Ctrl+F` (tai `Cmd+F`) Elements-välilehdellä avaa haun, jolla voi
+etsiä esim. `id="save-` löytääkseen kaikki tallennusnapit kerralla.
+
+## 6. Vinkkejä
+
 - `headless=False` (oletus resurssitiedostossa) näyttää selainikkunan — hyvä
   debuggaukseen. Aseta `${HEADLESS}    True`, jos haluat ajaa ilman ikkunaa.
 - Jos testi jää jumiin kirjautumisen jälkeen, tarkista että `python init_db.py`
