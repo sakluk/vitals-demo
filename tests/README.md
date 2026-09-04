@@ -59,3 +59,11 @@ Tulokset (`log.html`, `report.html`) syntyvät ajokansioon.
   debuggaukseen. Aseta `${HEADLESS}    True`, jos haluat ajaa ilman ikkunaa.
 - Jos testi jää jumiin kirjautumisen jälkeen, tarkista että `python init_db.py`
   on ajettu ja tietokanta sisältää oletuskäyttäjät.
+- Kun kirjoitat `02_patient_tests.robot`-tiedostoon useamman testitapauksen,
+  jotka kirjautuvat sisään eri käyttäjänä (esim. ensin hoitajana, sitten
+  lääkärinä), saatat törmätä tilanteeseen, jossa `Login As`-avainsana jää
+  odottamaan `id=username`-kenttää loputtomiin eikä testi koskaan etene.
+  Tämä ei ole sattumaa — mieti, missä tilassa edellisen testitapauksen
+  selainistunto oli, kun se päättyi, ja mitä sille pitäisi tehdä ennen
+  seuraavaa kirjautumista. Vihje: katso, miten `01_login_tests.robot`
+  huolehtii tästä `Test Teardown`-avainsanallaan.
