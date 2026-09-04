@@ -1,8 +1,7 @@
 # VitalsDemo
 
 Kevyt Flask-pohjainen potilasvalvonnan harjoitussovellus. Käytetään
-**Potilasvalvonnan laitteet** -kurssin (TX00EY15, Metropolia AMK) Tuntitehtävä
-4:n aamupäivässä Robot Framework -testiautomaation harjoitteluun.
+**Potilasvalvonnan laitteet** -kurssin (TX00EY15, Metropolia AMK) Robot Framework -testiautomaation harjoitteluun.
 
 > ⚠️ Tämä on **opetustarkoitukseen tehty harjoitusympäristö**, ei
 > tuotantotasoinen sovellus. Se ei täytä GDPR-vaatimuksia eikä sisällä
