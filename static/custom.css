@@ -1,0 +1,9 @@
+/* VitalsDemo — pieniä ulkoasun lisäyksiä Bootstrap 5 -pohjan päälle */
+
+body {
+    background-color: #f7f9fb;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}

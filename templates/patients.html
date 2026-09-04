@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Potilaslista{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Potilaslista</h1>
+    {% if current_user.role == 'laakari' %}
+    <a id="add-patient-btn" class="btn btn-primary" href="{{ url_for('main.add_patient') }}">
+        Lisää potilas
+    </a>
+    {% endif %}
+</div>
+
+<div class="mb-3">
+    <input type="text" id="search-input" class="form-control" placeholder="Hae nimellä tai huoneella…">
+</div>
+
+<table id="patients-table" class="table table-striped table-hover align-middle">
+    <thead>
+        <tr>
+            <th>Nimi</th>
+            <th>Huone</th>
+            <th>Syntymäaika</th>
+            <th>Viimeisin kirjaus</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for patient in patients %}
+        <tr id="patient-row-{{ patient['id'] }}"
+            data-name="{{ patient['name'] | lower }}"
+            data-room="{{ (patient['room'] or '') | lower }}">
+            <td>
+                <a href="{{ url_for('main.patient_detail', patient_id=patient['id']) }}">
+                    {{ patient['name'] }}
+                </a>
+            </td>
+            <td>{{ patient['room'] or '–' }}</td>
+            <td>{{ patient['dob'] or '–' }}</td>
+            <td>{{ patient['latest_measurement_at'] or 'Ei mittauksia' }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if stats %}
+<div class="card mt-4">
+    <div class="card-header">Käyttäjätilastot</div>
+    <div class="card-body">
+        <table class="table table-sm mb-0">
+            <thead>
+                <tr><th>Käyttäjä</th><th>Mittauksia</th><th>Huomioita</th></tr>
+            </thead>
+            <tbody>
+                {% for row in stats %}
+                <tr>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.measurements }}</td>
+                    <td>{{ row.notes }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('search-input').addEventListener('input', function () {
+    var query = this.value.trim().toLowerCase();
+    document.querySelectorAll('#patients-table tbody tr').forEach(function (row) {
+        var match = row.dataset.name.includes(query) || row.dataset.room.includes(query);
+        row.style.display = match ? '' : 'none';
+    });
+});
+</script>
+{% endblock %}

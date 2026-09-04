@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Lisää potilas{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="h4 mb-3">Lisää uusi potilas</h1>
+
+        {% if error %}
+        <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+
+        <form method="post">
+            <div class="mb-3">
+                <label for="patient-name" class="form-label">Nimi</label>
+                <input type="text" id="patient-name" name="patient-name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="patient-dob" class="form-label">Syntymäaika</label>
+                <input type="date" id="patient-dob" name="patient-dob" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="patient-room" class="form-label">Huone</label>
+                <input type="text" id="patient-room" name="patient-room" class="form-control" placeholder="esim. A204">
+            </div>
+            <button type="submit" id="save-patient-btn" class="btn btn-primary">Tallenna</button>
+            <a href="{{ url_for('main.patients_list') }}" class="btn btn-link">Peruuta</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

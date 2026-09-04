@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ patient['name'] }}{% endblock %}
+{% block content %}
+<a id="back-link" href="{{ url_for('main.patients_list') }}" class="d-inline-block mb-3">&larr; Takaisin potilaslistaan</a>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h1 id="patient-name" class="h3">{{ patient['name'] }}</h1>
+        <p class="mb-1">Huone: <span id="patient-room">{{ patient['room'] or '–' }}</span></p>
+        <p class="mb-3">Syntymäaika: <span id="patient-dob">{{ patient['dob'] or '–' }}</span></p>
+
+        {% if current_user.role == 'laakari' %}
+        <form method="post" action="{{ url_for('main.delete_patient_route', patient_id=patient['id']) }}"
+              onsubmit="return confirm('Poistetaanko potilas {{ patient['name'] }} pysyvästi?');">
+            <button type="submit" id="delete-patient-btn" class="btn btn-outline-danger btn-sm">
+                Poista potilas
+            </button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h2 class="h5 mb-0">Mittaukset</h2>
+    <a id="add-measurement-btn" class="btn btn-primary btn-sm"
+       href="{{ url_for('main.add_measurement', patient_id=patient['id']) }}">
+        Lisää mittaus
+    </a>
+</div>
+<table id="measurements-table" class="table table-sm table-striped mb-4">
+    <thead>
+        <tr>
+            <th>Tyyppi</th>
+            <th>Arvo</th>
+            <th>Yksikkö</th>
+            <th>Kirjaaja</th>
+            <th>Aika</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for m in measurements %}
+        <tr id="measurement-row-{{ m['id'] }}">
+            <td>{{ m['param_type'] }}</td>
+            <td>{{ m['value'] }}</td>
+            <td>{{ m['unit'] }}</td>
+            <td>{{ m['recorded_by'] }}</td>
+            <td>{{ m['recorded_at'] }}</td>
+        </tr>
+        {% else %}
+        <tr><td colspan="5" class="text-muted">Ei mittauksia vielä.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div id="notes-section">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2 class="h5 mb-0">Lääkärin huomiot</h2>
+        {% if current_user.role == 'laakari' %}
+        <button type="button" id="add-note-btn" class="btn btn-primary btn-sm"
+                data-bs-toggle="collapse" data-bs-target="#add-note-form">
+            Lisää huomio
+        </button>
+        {% endif %}
+    </div>
+
+    {% if current_user.role == 'laakari' %}
+    <div class="collapse mb-3" id="add-note-form">
+        <form method="post" action="{{ url_for('main.add_note', patient_id=patient['id']) }}">
+            <div class="mb-2">
+                <textarea id="note-content" name="note-content" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" id="save-note-btn" class="btn btn-success btn-sm">Tallenna huomio</button>
+        </form>
+    </div>
+    {% endif %}
+
+    {% if notes %}
+    <ul class="list-group">
+        {% for note in notes %}
+        <li class="list-group-item">
+            <div>{{ note['content'] }}</div>
+            <small class="text-muted">{{ note['author'] }} — {{ note['created_at'] }}</small>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="text-muted">Ei huomioita vielä.</p>
+    {% endif %}
+</div>
+{% endblock %}

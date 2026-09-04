@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+vitals.db
+*.log
+log.html
+report.html
+output.xml
+.DS_Store
