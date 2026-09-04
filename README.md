@@ -5,14 +5,56 @@ Kevyt Flask-pohjainen potilasvalvonnan harjoitussovellus. Käytetään
 4:n aamupäivässä Robot Framework -testiautomaation harjoitteluun.
 
 > ⚠️ Tämä on **opetustarkoitukseen tehty harjoitusympäristö**, ei
-> tuotantotasoinen sovellus. Se ei täytä HIPAA/GDPR-vaatimuksia eikä sisällä
+> tuotantotasoinen sovellus. Se ei täytä GDPR-vaatimuksia eikä sisällä
 > oikeaa potilasdataa — kaikki nimet ja mittausarvot ovat kuvitteellisia.
 
 ## Asennus ja käynnistys
 
+Vaatii Python 3.10 tai uudemman ([python.org/downloads](https://www.python.org/downloads/)).
+
+### 1. Kloonaa repositorio
+
+```bash
+git clone https://github.com/sakluk/vitals-demo.git
+cd vitals-demo
+```
+
+Jos sinulla ei ole Gitiä komentoriviltä, voit myös ladata repon ZIP-tiedostona
+GitHubin "Code" → "Download ZIP" -napista ja purkaa se koneellesi.
+
+### 2. Luo ja aktivoi virtuaaliympäristö
+
+Virtuaaliympäristö (`.venv`) pitää tämän projektin Python-paketit erillään
+muista projekteista ja järjestelmän Pythonista. Suositellaan, ei pakollinen.
+
+**Windows (PowerShell):**
+```powershell
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+```
+
+> Jos aktivointi antaa virheen skriptien suorittamisesta, aja ensin
+> `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` ja yritä uudelleen.
+
+**macOS / Linux:**
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+Kun ympäristö on aktivoitu, komentorivin alkuun ilmestyy `(.venv)`. Ympäristön
+voi sulkea komennolla `deactivate`.
+
+### 3. Asenna riippuvuudet ja alusta tietokanta
+
 ```bash
 pip install -r requirements.txt
 python init_db.py
+```
+
+### 4. Käynnistä sovellus
+
+```bash
 python app.py
 ```
 
