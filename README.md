@@ -7,6 +7,11 @@ Kevyt Flask-pohjainen potilasvalvonnan harjoitussovellus. Käytetään
 > ⚠️ Tämä on **opetustarkoitukseen tehty harjoitusympäristö**, ei
 > tuotantotasoinen sovellus. Se ei täytä GDPR-vaatimuksia eikä sisällä
 > oikeaa potilasdataa — kaikki nimet ja mittausarvot ovat kuvitteellisia.
+>
+> **Tarkoitettu ajettavaksi vain paikallisesti** (`localhost`) opetus- ja
+> harjoituskäyttöön. Sovelluksessa ei ole CSRF-suojausta eikä muita
+> tuotantotason turvamekanismeja, joten sitä ei pidä julkaista julkiseen
+> verkkoon tai muuhun kuin omaan, paikalliseen ympäristöön.
 
 ## Asennus ja käynnistys
 
